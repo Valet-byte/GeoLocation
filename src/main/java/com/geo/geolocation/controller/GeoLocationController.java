@@ -25,9 +25,6 @@ public class GeoLocationController {
             return ResponseEntity.ok(geoLocationService.getGeoLocation(request));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return ResponseEntity.internalServerError().body("fatal error");
         }
     }
 }

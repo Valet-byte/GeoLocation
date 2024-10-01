@@ -4,10 +4,7 @@ import com.geo.geolocation.model.GeoLocationRequest;
 import com.geo.geolocation.model.GeoLocationResponse;
 import com.geo.geolocation.service.GeoLocationService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class GeoLocationServiceValidationDecorator implements GeoLocationService {
 
     private final GeoLocationService geoLocationService;
-    private final Logger logger = LoggerFactory.getLogger(GeoLocationServiceValidationDecorator.class);
 
     @Override
     public GeoLocationResponse getGeoLocation(GeoLocationRequest request) {
