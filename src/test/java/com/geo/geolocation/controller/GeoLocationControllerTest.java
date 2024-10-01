@@ -29,7 +29,8 @@ class GeoLocationControllerTest {
 
     @Test
     public void testGetLocationSuccess() throws Exception {
-        GeoLocationRequest request = new GeoLocationRequest(new double[]{45.062609, 41.923656}, new double[]{57.165054, 65.498056});
+        GeoLocationRequest request = new GeoLocationRequest(new double[]{45.062609, 41.923656},
+                new double[]{57.165054, 65.498056});
         GeoLocationResponse response = new GeoLocationResponse(
                 new double[]{45.062609, 41.923656}, new double[]{57.165054, 65.498056},
                 "29Д, проспект Кулакова, Северо-Западный, Промышленный район, Ставрополь, городской округ Ставрополь, Ставропольский край, Северо-Кавказский федеральный округ, 355000, Россия",
@@ -43,19 +44,22 @@ class GeoLocationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
-        assertEquals(objectMapper.readValue(result.andReturn().getResponse().getContentAsByteArray(), GeoLocationResponse.class), response);
+        assertEquals(objectMapper.readValue(result.andReturn().getResponse().getContentAsByteArray(),
+                GeoLocationResponse.class), response);
     }
 
     @Test
     public void testGetLocationValidationError() throws Exception {
-        GeoLocationRequest request = new GeoLocationRequest(new double[]{45.062609, 41.923656}, new double[]{57.165054, 65.498056, 65.498056});
+        GeoLocationRequest request = new GeoLocationRequest(new double[]{45.062609, 41.923656},
+                new double[]{57.165054, 65.498056, 65.498056});
 
         ResultActions result = mockMvc.perform(get("/api/location")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8), "Coordinates must contain exactly two elements (latitude and longitude)");
+        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request = new GeoLocationRequest(new double[]{45.062609}, new double[]{57.165054, 65.498056});
 
@@ -64,7 +68,8 @@ class GeoLocationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8), "Coordinates must contain exactly two elements (latitude and longitude)");
+        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request = new GeoLocationRequest(null, null);
 
@@ -73,7 +78,8 @@ class GeoLocationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8), "Coordinates must contain exactly two elements (latitude and longitude)");
+        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request = new GeoLocationRequest(new double[]{45.062609, 41.923656}, new double[]{57.165054, 200.498056});
 
@@ -82,7 +88,8 @@ class GeoLocationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8), "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
 
         request = new GeoLocationRequest(new double[]{91.062609, 41.923656}, new double[]{57.165054, 65.498056});
 
@@ -91,7 +98,8 @@ class GeoLocationControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest());
 
-        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8), "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        assertEquals(result.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
     }
 
 }

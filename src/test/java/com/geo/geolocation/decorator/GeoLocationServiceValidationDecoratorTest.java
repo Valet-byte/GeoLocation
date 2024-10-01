@@ -21,7 +21,6 @@ class GeoLocationServiceValidationDecoratorTest {
     @InjectMocks
     GeoLocationServiceValidationDecorator decorator;
 
-
     @MockBean
     GeoLocationServiceImpl geoLocationService;
 
@@ -34,7 +33,6 @@ class GeoLocationServiceValidationDecoratorTest {
 
     @BeforeEach
     void setUp() {
-        System.out.println("askf;ljdsaklfdjsikalof;jeiowa;fj");
         when(geoLocationService.getGeoLocation(any(GeoLocationRequest.class)))
                 .thenReturn(response);
     }
@@ -54,42 +52,42 @@ class GeoLocationServiceValidationDecoratorTest {
         GeoLocationRequest request
                 = new GeoLocationRequest(null, new double[]{57.165054, 65.498056});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                ,"Coordinates must contain exactly two elements (latitude and longitude)");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request.setEndPos(null);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Coordinates must contain exactly two elements (latitude and longitude)");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request.setStartPos(new double[]{57.165054, 65.498056});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Coordinates must contain exactly two elements (latitude and longitude)");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request.setEndPos(new double[]{91.062609, 41.923656, 31.312321});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Coordinates must contain exactly two elements (latitude and longitude)");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Coordinates must contain exactly two elements (latitude and longitude)");
 
         request.setEndPos(new double[]{91.062609, 41.923656});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
 
         request.setEndPos(new double[]{41.062609, 200.923656});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
 
         request.setStartPos(new double[]{97.165054, 65.498056});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
 
         request.setStartPos(new double[]{57.165054, 200.498056});
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request)
-                , "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> decorator.getGeoLocation(request),
+                "Latitude must be between -90 and 90, and longitude must be between -180 and 180");
     }
 }
